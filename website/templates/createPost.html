@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %} Create Post {% endblock %}
+{% block style %}
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.preview-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+input[type="file"] {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+}
+
+.preview-container {
+    margin-top: 20px;
+}
+
+#image-preview {
+    max-width: 100%;
+    max-height: 300px;
+    display: none;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+}
+
+{% endblock  %}
+{% block name %}
+<h2 align="center">Make a post </h2>
+<br><br><br>
+<form method="POST" enctype="multipart/form-data">
+    <label for="postPhoto">Upload your photos and give the description </label>
+    <input type="file" id="upload" name="upload" accept="image/*" onchange="previewImage(event)">
+    <div class="preview-container">
+        <img id="image-preview" src="" alt="Image Preview" />
+    </div>
+    <br>
+    <textarea name="text" id="text" class="form-control" placeholder="Description"></textarea>
+    <br>
+    <div align="center">
+        <button type="submit" class="btn btn-lg btn-primary">Post</button>
+        <a href="/home"> <button type="button" class="btn btn-lg btn-secondary">Back</button> </a>
+    </div>
+</form>
+
+<script>
+    function previewImage(event) {
+        const reader = new FileReader();
+        const preview = document.getElementById('image-preview');
+        
+        reader.onload = function() {
+            preview.src = reader.result;
+            preview.style.display = "block";
+        }
+        
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+<br>
+{% endblock %}
